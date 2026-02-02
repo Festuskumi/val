@@ -1,0 +1,1058 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mandy, will you be my valentine? 💝</title>
+
+  <style>
+    :root{
+      --bg1:#0a0e1a;
+      --bg2:#1a0f2e;
+      --card: rgba(255,255,255,0.12);
+      --card2: rgba(255,255,255,0.07);
+      --text: rgba(255,255,255,0.94);
+      --muted: rgba(255,255,255,0.72);
+      --yes1:#10b981;
+      --yes2:#059669;
+      --no1:#ef4444;
+      --no2:#dc2626;
+      --glow: rgba(255,105,180,0.4);
+    }
+
+    *{ box-sizing: border-box; margin:0; padding:0; }
+    html,body{ height:100%; }
+    body{
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      overflow:hidden;
+      background:
+        radial-gradient(1200px 700px at 15% 8%, rgba(255,105,180,0.25), transparent 65%),
+        radial-gradient(1000px 750px at 85% 25%, rgba(16,185,129,0.18), transparent 60%),
+        radial-gradient(950px 700px at 50% 95%, rgba(139,92,246,0.24), transparent 65%),
+        linear-gradient(140deg, var(--bg1), var(--bg2));
+      animation: bgShift 20s ease-in-out infinite;
+    }
+
+    @keyframes bgShift{
+      0%, 100%{ filter: hue-rotate(0deg); }
+      50%{ filter: hue-rotate(15deg); }
+    }
+
+    .noise{
+      pointer-events:none;
+      position:fixed;
+      inset:0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+      opacity: .12;
+      animation: noiseShift 8s steps(10) infinite;
+    }
+
+    @keyframes noiseShift{
+      0%, 100%{ transform: translate(0, 0); }
+      10%{ transform: translate(-5%, -5%); }
+      20%{ transform: translate(-10%, 5%); }
+      30%{ transform: translate(5%, -10%); }
+      40%{ transform: translate(-15%, 0); }
+      50%{ transform: translate(10%, 10%); }
+      60%{ transform: translate(0, -15%); }
+      70%{ transform: translate(-10%, -5%); }
+      80%{ transform: translate(15%, 5%); }
+      90%{ transform: translate(5%, 15%); }
+    }
+
+    .wrap{
+      height:100%;
+      display:grid;
+      place-items:center;
+      padding:28px;
+      position:relative;
+    }
+
+    .floaters{
+      position:fixed;
+      inset:0;
+      overflow:hidden;
+      pointer-events:none;
+      opacity: 0.92;
+    }
+    
+    .floater{
+      position:absolute;
+      width: 20px;
+      height: 20px;
+      filter: drop-shadow(0 12px 28px rgba(0,0,0,0.4));
+      opacity: 0.85;
+      animation: drift linear infinite;
+    }
+    
+    .floater::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: radial-gradient(circle at 35% 25%, rgba(255,255,255,0.95), rgba(255,255,255,0) 50%),
+                  radial-gradient(circle at 65% 75%, rgba(255,255,255,0.6), rgba(255,255,255,0) 60%),
+                  linear-gradient(135deg, rgba(255,105,180,0.9), rgba(239,68,68,0.8));
+      border-radius: 7px 7px 12px 12px;
+      transform: rotate(45deg);
+      clip-path: polygon(50% 0%, 85% 15%, 100% 50%, 85% 85%, 50% 100%, 15% 85%, 0% 50%, 15% 15%);
+    }
+
+    @keyframes drift{
+      from { 
+        transform: translate3d(0, 110vh, 0) rotate(0deg) scale(1);
+        opacity: 0;
+      }
+      5% {
+        opacity: 0.85;
+      }
+      95% {
+        opacity: 0.85;
+      }
+      to { 
+        transform: translate3d(0, -150vh, 0) rotate(720deg) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    .card{
+      width:min(900px, 100%);
+      background: linear-gradient(165deg, var(--card), var(--card2));
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 32px;
+      box-shadow:
+        0 25px 70px rgba(0,0,0,0.5),
+        0 0 0 1px rgba(255,255,255,0.06) inset,
+        0 0 80px rgba(255,105,180,0.15);
+      position:relative;
+      overflow:hidden;
+      padding: 38px 32px 32px;
+      backdrop-filter: blur(18px) saturate(180%);
+      animation: cardEntrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes cardEntrance{
+      from{
+        opacity: 0;
+        transform: scale(0.92) translateY(30px);
+      }
+      to{
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-150px;
+      background:
+        radial-gradient(closest-side at 18% 28%, rgba(255,105,180,0.28), transparent 72%),
+        radial-gradient(closest-side at 82% 18%, rgba(16,185,129,0.18), transparent 72%),
+        radial-gradient(closest-side at 60% 88%, rgba(139,92,246,0.25), transparent 72%);
+      transform: rotate(10deg);
+      pointer-events:none;
+      animation: glowPulse 8s ease-in-out infinite;
+    }
+
+    @keyframes glowPulse{
+      0%, 100%{ opacity: 1; transform: rotate(10deg) scale(1); }
+      50%{ opacity: 0.8; transform: rotate(15deg) scale(1.05); }
+    }
+
+    .topline{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      position:relative;
+      z-index:1;
+      flex-wrap:wrap;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:11px;
+      padding:11px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.14);
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+
+    .badge:hover{
+      background: rgba(255,255,255,0.12);
+      transform: translateY(-1px);
+    }
+
+    .spark{
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,1), rgba(255,105,180,0.85));
+      box-shadow: 0 0 24px var(--glow), 0 0 8px rgba(255,255,255,0.8);
+      animation: sparkPulse 1.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    
+    @keyframes sparkPulse{
+      0%, 100%{ 
+        transform: scale(1); 
+        opacity: 0.85;
+        box-shadow: 0 0 24px var(--glow), 0 0 8px rgba(255,255,255,0.8);
+      }
+      50%{ 
+        transform: scale(1.6); 
+        opacity: 1;
+        box-shadow: 0 0 32px var(--glow), 0 0 12px rgba(255,255,255,1);
+      }
+    }
+
+    .hero{
+      margin-top: 22px;
+      position:relative;
+      z-index:1;
+      display:grid;
+      gap: 16px;
+    }
+
+    h1{
+      margin: 0;
+      font-size: clamp(36px, 4.6vw, 62px);
+      line-height: 1.03;
+      letter-spacing: -0.8px;
+      font-weight: 800;
+      text-shadow: 0 16px 48px rgba(0,0,0,0.55);
+      animation: titleFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes titleFloat{
+      0%, 100%{ transform: translateY(0px); }
+      50%{ transform: translateY(-4px); }
+    }
+
+    .name{
+      display:inline-block;
+      background: linear-gradient(120deg, rgba(255,105,180,1), rgba(16,185,129,1), rgba(139,92,246,0.9));
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      background-clip:text;
+      color: transparent;
+      filter: drop-shadow(0 12px 24px rgba(255,105,180,0.4));
+      animation: gradientShift 4s ease infinite;
+    }
+
+    @keyframes gradientShift{
+      0%, 100%{ background-position: 0% 50%; }
+      50%{ background-position: 100% 50%; }
+    }
+
+    .subtitle{
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(15px, 1.9vw, 19px);
+      max-width: 65ch;
+      line-height: 1.5;
+    }
+
+    .stage{
+      margin-top: 28px;
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.22);
+      padding: 24px;
+      position:relative;
+      min-height: 300px;
+      overflow:hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3) inset;
+    }
+
+    .stage::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(550px 300px at 25% 18%, rgba(255,105,180,0.15), transparent 68%),
+        radial-gradient(580px 320px at 75% 85%, rgba(16,185,129,0.12), transparent 68%);
+      pointer-events:none;
+      animation: stageGlow 6s ease-in-out infinite;
+    }
+
+    @keyframes stageGlow{
+      0%, 100%{ opacity: 1; }
+      50%{ opacity: 0.7; }
+    }
+
+    .question{
+      position:relative;
+      z-index:1;
+      display:flex;
+      flex-direction:column;
+      gap: 16px;
+      align-items:flex-start;
+    }
+
+    .prompt{
+      font-size: clamp(24px, 2.9vw, 34px);
+      margin: 0;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .commentary{
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .btnRow{
+      display:flex;
+      gap: 14px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-top: 8px;
+      position:relative;
+      z-index:2;
+    }
+
+    button{
+      appearance:none;
+      border:none;
+      cursor:pointer;
+      border-radius: 18px;
+      padding: 16px 24px;
+      font-weight: 700;
+      font-size: 17px;
+      letter-spacing: 0.3px;
+      color: rgba(255,255,255,0.98);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.1) inset;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      position:relative;
+      overflow: hidden;
+    }
+
+    button::before{
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    button:hover::before{
+      opacity: 1;
+    }
+
+    button:active{
+      transform: translateY(2px) scale(0.98);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.4);
+    }
+
+    .yes{
+      background: linear-gradient(135deg, var(--yes1), var(--yes2));
+      animation: yesGlow 2s ease-in-out infinite;
+    }
+
+    @keyframes yesGlow{
+      0%, 100%{ box-shadow: 0 20px 40px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.1) inset, 0 0 20px rgba(16,185,129,0.3); }
+      50%{ box-shadow: 0 20px 40px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.1) inset, 0 0 35px rgba(16,185,129,0.5); }
+    }
+
+    .no{
+      background: linear-gradient(135deg, var(--no1), var(--no2));
+    }
+
+    .yes:hover, .no:hover{
+      filter: brightness(1.08);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.15) inset;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 11px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .status{
+      margin-top: 16px;
+      position:relative;
+      z-index:1;
+      display:flex;
+      gap: 14px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    .toast{
+      display:inline-flex;
+      align-items:center;
+      gap:12px;
+      padding: 14px 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.90);
+      font-size: 15px;
+      max-width: 72ch;
+      box-shadow: 0 20px 42px rgba(0,0,0,0.4);
+      transform: translateY(0);
+      opacity: 1;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .toast.hide{
+      opacity: 0;
+      transform: translateY(10px) scale(0.95);
+    }
+
+    .emoji{
+      width: 26px;
+      height: 26px;
+      display:grid;
+      place-items:center;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.32);
+      flex: 0 0 auto;
+      font-size: 16px;
+    }
+
+    .arena{
+      position:absolute;
+      inset:0;
+      z-index:3;
+      pointer-events:none;
+    }
+
+    .noEvasive{
+      position:absolute;
+      left: 24px;
+      top: 160px;
+      pointer-events:auto;
+      animation: shake 0.4s ease;
+    }
+
+    @keyframes shake{
+      0%, 100%{ transform: translateX(0) rotate(0deg); }
+      25%{ transform: translateX(-8px) rotate(-3deg); }
+      75%{ transform: translateX(8px) rotate(3deg); }
+    }
+
+    .celebration{
+      position:absolute;
+      inset:0;
+      display:none;
+      place-items:center;
+      z-index: 5;
+      background: radial-gradient(1000px 600px at 50% 40%, rgba(255,255,255,0.12), rgba(0,0,0,0.5));
+      backdrop-filter: blur(8px);
+    }
+
+    .celebration.show{
+      display:grid;
+      animation: fadeIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes fadeIn{
+      from { 
+        opacity:0; 
+        transform: scale(0.94);
+      }
+      to { 
+        opacity:1; 
+        transform: scale(1);
+      }
+    }
+
+    .celeCard{
+      width:min(720px, 94%);
+      border-radius: 30px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(0,0,0,0.4);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+      padding: 32px 28px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+      backdrop-filter: blur(12px);
+      animation: celebrationPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes celebrationPop{
+      0%{
+        transform: scale(0.8) rotate(-5deg);
+        opacity: 0;
+      }
+      100%{
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+      }
+    }
+
+    .celeCard::before{
+      content:"";
+      position:absolute;
+      inset:-160px;
+      background:
+        radial-gradient(closest-side at 30% 30%, rgba(255,105,180,0.38), transparent 72%),
+        radial-gradient(closest-side at 75% 40%, rgba(16,185,129,0.24), transparent 72%),
+        radial-gradient(closest-side at 55% 88%, rgba(139,92,246,0.28), transparent 72%);
+      transform: rotate(-12deg);
+      pointer-events:none;
+      animation: celebGlow 4s ease-in-out infinite;
+    }
+
+    @keyframes celebGlow{
+      0%, 100%{ transform: rotate(-12deg) scale(1); }
+      50%{ transform: rotate(-8deg) scale(1.1); }
+    }
+
+    .big{
+      position:relative;
+      z-index:1;
+      font-size: clamp(30px, 3.8vw, 50px);
+      margin: 0 0 12px 0;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      text-shadow: 0 20px 52px rgba(0,0,0,0.65);
+      animation: bigBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes bigBounce{
+      0%{ transform: scale(0.5); opacity: 0; }
+      100%{ transform: scale(1); opacity: 1; }
+    }
+
+    .small{
+      position:relative;
+      z-index:1;
+      margin: 0;
+      color: rgba(255,255,255,0.86);
+      font-size: 17px;
+      line-height: 1.5;
+      animation: smallSlide 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s backwards;
+    }
+
+    @keyframes smallSlide{
+      0%{ transform: translateY(20px); opacity: 0; }
+      100%{ transform: translateY(0); opacity: 1; }
+    }
+
+    canvas{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index: 100;
+    }
+
+    .hint{
+      margin-top: 14px;
+      color: rgba(255,255,255,0.68);
+      font-size: 13.5px;
+      position:relative;
+      z-index:1;
+      line-height: 1.5;
+      animation: hintSlide 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s backwards;
+    }
+
+    @keyframes hintSlide{
+      0%{ transform: translateY(15px); opacity: 0; }
+      100%{ transform: translateY(0); opacity: 1; }
+    }
+
+    .progressBar{
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: rgba(255,255,255,0.08);
+      overflow: hidden;
+      border-radius: 0 0 24px 24px;
+    }
+
+    .progressFill{
+      height: 100%;
+      background: linear-gradient(90deg, rgba(255,105,180,0.8), rgba(16,185,129,0.8));
+      width: 0%;
+      transition: width 0.3s ease;
+      box-shadow: 0 0 12px rgba(255,105,180,0.6);
+    }
+
+    @media (max-width: 580px){
+      .stage{ min-height: 350px; padding: 20px; }
+      .noEvasive{ top: 200px; }
+      .topline{ gap: 10px; }
+      .btnRow{ gap: 10px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="noise"></div>
+  <canvas id="confetti"></canvas>
+
+  <div class="floaters" id="floaters" aria-hidden="true"></div>
+
+  <main class="wrap">
+    <section class="card" role="application" aria-label="Valentine page">
+      <div class="topline">
+        <div class="badge">
+          <span class="spark"></span>
+          <span id="badgeText">Mission: Acquire Valentine Status</span>
+        </div>
+
+        <div class="pill" id="scorePill">No button dodges: <strong id="noCount">0</strong></div>
+      </div>
+
+      <div class="hero">
+        <h1>
+          <span class="name" id="name">Mandy</span>,
+          <br />
+          will you be my valentine?
+        </h1>
+        <p class="subtitle" id="subtitle">
+          This page is legally binding in 49 states. The 50th is still reviewing the paperwork.
+        </p>
+      </div>
+
+      <div class="stage" id="stage">
+        <div class="question">
+          <p class="prompt" id="prompt">Choose your destiny wisely.</p>
+          <p class="commentary" id="commentary">Pro tip: One button leads to eternal happiness. The other leads to... cardio.</p>
+
+          <div class="btnRow" id="btnRow">
+            <button class="yes" id="yesBtn" type="button">✨ Yes</button>
+            <button class="no" id="noBtn" type="button">🏃‍♂️ No</button>
+            <span class="pill" id="moodPill">Vibe: <strong id="mood">Dangerously romantic</strong></span>
+          </div>
+
+          <div class="status" aria-live="polite" aria-atomic="true">
+            <div class="toast" id="toast">
+              <span class="emoji" id="toastEmoji">💝</span>
+              <span id="toastText">Welcome, Mandy. The Yes button is patiently waiting for you.</span>
+            </div>
+          </div>
+
+          <p class="hint" id="hint">
+            💡 Fun fact: The No button has commitment issues and a gym membership.
+          </p>
+        </div>
+
+        <div class="arena" id="arena"></div>
+        <div class="progressBar"><div class="progressFill" id="progressFill"></div></div>
+
+        <div class="celebration" id="celebration" role="dialog" aria-modal="true" aria-label="Celebration">
+          <div class="celeCard">
+            <h2 class="big" id="celeTitle">🎉 Correct answer detected!</h2>
+            <p class="small" id="celeText">See you on February 14th. Dress code: Cute. Vibe: Immaculate. 💘</p>
+            <p class="hint" id="celeHint">Screenshot this for proof that you made the right choice. Unlike your attempt to press No.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const name = "Mandy";
+
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const stage = document.getElementById("stage");
+    const arena = document.getElementById("arena");
+    const toast = document.getElementById("toast");
+    const toastText = document.getElementById("toastText");
+    const toastEmoji = document.getElementById("toastEmoji");
+    const noCountEl = document.getElementById("noCount");
+    const moodEl = document.getElementById("mood");
+    const badgeText = document.getElementById("badgeText");
+    const celebration = document.getElementById("celebration");
+    const celeTitle = document.getElementById("celeTitle");
+    const celeText = document.getElementById("celeText");
+    const celeHint = document.getElementById("celeHint");
+    const subtitle = document.getElementById("subtitle");
+    const prompt = document.getElementById("prompt");
+    const commentary = document.getElementById("commentary");
+    const progressFill = document.getElementById("progressFill");
+    document.getElementById("name").textContent = name;
+
+    let noCount = 0;
+    let evasiveMode = false;
+    let celebrationMode = false;
+    let noTeleports = 0;
+
+    const firstNoLines = [
+      "Interesting. You pressed No. The algorithm is confused. Let's pretend that didn't happen.",
+      "No? Wow. That's bold. Your finger must have slipped. Try again, champ.",
+      "Did you just—? Okay. The system has filed a complaint. Retry required.",
+      "No selected. HR has been notified. Please reconsider your life choices."
+    ];
+
+    const evasiveLines = [
+      "The No button is now in witness protection. Good luck finding it.",
+      "You really thought you could reject me that easily? How naive.",
+      "No is currently on vacation. Leave a message after the beep.",
+      "That button is training for a marathon. Show some respect.",
+      "The No button has left the building. Elvis style.",
+      "Breaking: No button files restraining order against your cursor."
+    ];
+
+    const moodLines = [
+      "Dangerously romantic",
+      "Chaotic wholesome",
+      "Certified simp energy",
+      "Aggressively adorable",
+      "Emotionally invested CEO",
+      "Tactical boyfriend mode",
+      "Hopelessly devoted idiot",
+      "Professional heart-stealer"
+    ];
+
+    const yesResponseLines = [
+      "See you on February 14th. Dress code: Cute. Vibe: Immaculate. 💘",
+      "February 14th just became the best day of 2026. No pressure. 💝",
+      "Correct answer unlocked. Valentine's Day reservation: Confirmed. 🌹",
+      "System status: In love. See you on the 14th, ${name}. ✨",
+      "You just made the best decision of your life. February 14th awaits. 💕"
+    ];
+
+    const celebTitles = [
+      "🎉 Correct answer detected!",
+      "✨ Success! Valentine acquired!",
+      "💝 Achievement unlocked: Best Decision Ever!",
+      "🎊 Mission accomplished!",
+      "💘 You did it! Smart choice!"
+    ];
+
+    const celebHints = [
+      "Screenshot this for proof that you made the right choice. Unlike your attempt to press No.",
+      "Frame this and hang it on your wall. Or at least send it to your group chat.",
+      "This is now legally binding. No backsies. See you on the 14th. 💅",
+      "Congratulations on being smarter than the No button. Low bar, but still.",
+      "You just won Valentine's Day. And my heart. In that order."
+    ];
+
+    function pick(arr){
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function showToast(emoji, text){
+      toast.classList.add("hide");
+      setTimeout(() => {
+        toastEmoji.textContent = emoji;
+        toastText.textContent = text;
+        toast.classList.remove("hide");
+      }, 220);
+    }
+
+    function setMood(){
+      moodEl.textContent = pick(moodLines);
+    }
+
+    function updateProgress(){
+      const progress = Math.min((noCount / 10) * 100, 100);
+      progressFill.style.width = progress + "%";
+    }
+
+    function lockInEvasiveNo(){
+      evasiveMode = true;
+
+      noBtn.remove();
+      noBtn.classList.add("noEvasive");
+      arena.appendChild(noBtn);
+
+      positionNoRandom();
+      showToast("😼", pick(evasiveLines));
+      badgeText.textContent = "Defense mode: No button evasion activated";
+      subtitle.textContent = "This page has evolved from cute to tactically advanced.";
+      prompt.textContent = "Still want to say no?";
+      commentary.textContent = "Good luck catching that button. It's been training.";
+
+      noBtn.addEventListener("mouseenter", teleportNo, { passive: true });
+      noBtn.addEventListener("pointerenter", teleportNo, { passive: true });
+
+      stage.addEventListener("pointermove", (e) => {
+        if(!evasiveMode || celebrationMode) return;
+        const rect = noBtn.getBoundingClientRect();
+        const dx = Math.abs(e.clientX - (rect.left + rect.width/2));
+        const dy = Math.abs(e.clientY - (rect.top + rect.height/2));
+        if(dx < 140 && dy < 100){
+          teleportNo();
+        }
+      }, { passive: true });
+
+      noBtn.addEventListener("click", () => {
+        if(celebrationMode) return;
+        noCount += 1;
+        noCountEl.textContent = String(noCount);
+        updateProgress();
+        
+        const snarkyComments = [
+          "😮‍💨 You actually clicked it. Impressive finger speed. Now click Yes.",
+          "🤨 Persistent, aren't we? The Yes button is RIGHT THERE.",
+          "😤 At this point you're just showing off. Press Yes and end this charade.",
+          "🙄 Your dedication to pressing No is... concerning. Try Yes for once.",
+          "💀 Bro. The No button isn't going to marry you. Press Yes.",
+          "🤦 You've clicked No " + noCount + " times. That's " + noCount + " too many. Press Yes."
+        ];
+        showToast("😑", pick(snarkyComments));
+        setMood();
+      });
+    }
+
+    function positionNoRandom(){
+      const pad = 20;
+      const bounds = stage.getBoundingClientRect();
+
+      const btnW = 130;
+      const btnH = 56;
+
+      const minX = pad;
+      const minY = 120;
+      const maxX = Math.max(minX, bounds.width - btnW - pad);
+      const maxY = Math.max(minY, bounds.height - btnH - pad - 4);
+
+      const x = minX + Math.random() * (maxX - minX);
+      const y = minY + Math.random() * (maxY - minY);
+
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    }
+
+    function teleportNo(){
+      if(!evasiveMode || celebrationMode) return;
+      noTeleports += 1;
+
+      positionNoRandom();
+      noBtn.style.animation = "none";
+      setTimeout(() => { noBtn.style.animation = ""; }, 10);
+
+      const jokes = [
+        "🏃 Nope. Try again.",
+        "🚫 Access denied.",
+        "💨 Missed me!",
+        "🎯 Better luck next time.",
+        "⚡ Too slow, buddy.",
+        "🏃‍♂️ Catch me if you can.",
+        "🙅 Not happening.",
+        "🤸 Parkour!",
+        "👋 Bye!",
+        "🏃‍♂️ On your left!"
+      ];
+
+      if(noTeleports % 2 === 0){
+        showToast(pick(["🏃‍♂️", "💨", "⚡", "🚀"]), pick(jokes));
+        setMood();
+      }
+
+      if(noTeleports === 5){
+        showToast("😏", "The No button has evaded you 5 times. Maybe take the hint?");
+      }
+
+      if(noTeleports === 10){
+        showToast("💀", "10 dodges. You're basically training it for the Olympics at this point.");
+      }
+    }
+
+    function enterCelebration(){
+      celebrationMode = true;
+      evasiveMode = false;
+
+      celebration.classList.add("show");
+      badgeText.textContent = "Status: Valentine successfully acquired ✅";
+      showToast("🎉", "Best decision ever. February 14th is officially reserved.");
+
+      celeTitle.textContent = pick(celebTitles);
+      celeText.textContent = pick(yesResponseLines).replace("${name}", name);
+      celeHint.textContent = pick(celebHints);
+
+      startConfetti(350);
+    }
+
+    yesBtn.addEventListener("click", () => {
+      if(celebrationMode) return;
+      enterCelebration();
+    });
+
+    noBtn.addEventListener("click", () => {
+      if(celebrationMode) return;
+
+      noCount += 1;
+      noCountEl.textContent = String(noCount);
+      updateProgress();
+
+      if(noCount === 1){
+        showToast("😤", pick(firstNoLines));
+        setMood();
+        setTimeout(() => {
+          showToast("🛡️", "The No button is now entering stealth mode. Catch it if you can.");
+          lockInEvasiveNo();
+        }, 800);
+        return;
+      }
+
+      showToast("😼", pick(evasiveLines));
+      setMood();
+      lockInEvasiveNo();
+    });
+
+    function buildFloaters(){
+      const container = document.getElementById("floaters");
+      const count = 22;
+      for(let i = 0; i < count; i++){
+        const f = document.createElement("div");
+        f.className = "floater";
+        const left = Math.random() * 100;
+        const dur = 12 + Math.random() * 16;
+        const delay = -Math.random() * 20;
+        const size = 15 + Math.random() * 22;
+        f.style.left = left + "vw";
+        f.style.animationDuration = dur + "s";
+        f.style.animationDelay = delay + "s";
+        f.style.width = size + "px";
+        f.style.height = size + "px";
+        f.style.opacity = String(0.4 + Math.random() * 0.5);
+        container.appendChild(f);
+      }
+    }
+    buildFloaters();
+
+    setMood();
+    showToast("💝", `Welcome, ${name}. The Yes button is patiently waiting for you.`);
+
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+
+    function resize(){
+      canvas.width = window.innerWidth * devicePixelRatio;
+      canvas.height = window.innerHeight * devicePixelRatio;
+      canvas.style.width = window.innerWidth + "px";
+      canvas.style.height = window.innerHeight + "px";
+      ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+    }
+    window.addEventListener("resize", resize, { passive: true });
+    resize();
+
+    let confetti = [];
+    let running = false;
+
+    function rand(min,max){ return min + Math.random() * (max - min); }
+
+    function startConfetti(bursts){
+      confetti = [];
+      for(let i = 0; i < bursts; i++){
+        confetti.push({
+          x: rand(0, window.innerWidth),
+          y: rand(-60, window.innerHeight * 0.15),
+          vx: rand(-4, 4),
+          vy: rand(2.5, 8.5),
+          size: rand(5, 13),
+          rot: rand(0, Math.PI * 2),
+          vr: rand(-0.25, 0.25),
+          shape: Math.random() < 0.35 ? "heart" : "rect",
+          life: rand(80, 160),
+          color: Math.random()
+        });
+      }
+      running = true;
+      requestAnimationFrame(tick);
+    }
+
+    function drawHeart(x, y, s, r){
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(r);
+      ctx.beginPath();
+      const t = s * 0.62;
+      ctx.moveTo(0, t);
+      ctx.bezierCurveTo(0, 0, -s, 0, -s, t);
+      ctx.bezierCurveTo(-s, s*1.4, 0, s*1.6, 0, s*1.95);
+      ctx.bezierCurveTo(0, s*1.6, s, s*1.4, s, t);
+      ctx.bezierCurveTo(s, 0, 0, 0, 0, t);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function tick(){
+      if(!running) return;
+
+      ctx.clearRect(0,0, window.innerWidth, window.innerHeight);
+
+      for(const p of confetti){
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.08;
+        p.rot += p.vr;
+        p.life -= 1;
+
+        const hueBase = p.color < 0.33 ? 330 : (p.color < 0.66 ? 160 : 270);
+        const hue = hueBase + Math.sin((p.x + p.y) * 0.012) * 30;
+        const alpha = Math.min(1, p.life / 40);
+        ctx.fillStyle = `hsla(${hue}, 88%, 65%, ${alpha * 0.92})`;
+
+        if(p.shape === "heart"){
+          drawHeart(p.x, p.y, p.size, p.rot);
+        }else{
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rot);
+          ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size * 0.72);
+          ctx.restore();
+        }
+      }
+
+      confetti = confetti.filter(p => p.life > 0 && p.y < window.innerHeight + 100);
+
+      if(confetti.length === 0){
+        running = false;
+        ctx.clearRect(0,0, window.innerWidth, window.innerHeight);
+        return;
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    window.addEventListener("keydown", (e) => {
+      if((e.key.toLowerCase() === "y" || e.key === "Enter") && !celebrationMode){
+        enterCelebration();
+      }
+      if(e.key.toLowerCase() === "n" && !celebrationMode){
+        noBtn.click();
+      }
+    });
+
+    yesBtn.addEventListener("mouseenter", () => {
+      if(!celebrationMode){
+        yesBtn.textContent = "✨ Click me! ✨";
+      }
+    });
+
+    yesBtn.addEventListener("mouseleave", () => {
+      if(!celebrationMode){
+        yesBtn.textContent = "✨ Yes";
+      }
+    });
+  </script>
+</body>
+</html>
